@@ -7,8 +7,20 @@
 <script src="js/phonephonephone.js"></script>
 <script type="text/javascript">
 $(function() {
+    // Enable pusher logging - don't include this in production
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) window.console.log(message);
+    };
+
+    // Flash fallback logging - don't include this in production
+    WEB_SOCKET_DEBUG = true;
+
+    // set up auth
+    Pusher.channel_auth_endpoint = '/pusher_auth.php';
+
+    // init
 	var pusher = new Pusher('a4e27d5e92ed73bd5abe');
-	var channel = pusher.subscribe('test');
+	var channel = pusher.subscribe('presence-test');
 	var streamer = new phonephonephone(channel);
 	$(document).ready(function () {   
 	});

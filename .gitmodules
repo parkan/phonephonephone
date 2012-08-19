@@ -1,3 +1,6 @@
 [submodule "js/jquery.scrollTo"]
 	path = js/jquery.scrollTo
 	url = https://github.com/flesler/jquery.scrollTo.git
+[submodule "lib/Pusher-PHP"]
+	path = lib/Pusher-PHP
+	url = https://github.com/squeeks/Pusher-PHP.git
