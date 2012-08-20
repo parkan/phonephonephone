@@ -21,8 +21,14 @@ $(function() {
     // init
 	var pusher = new Pusher('a4e27d5e92ed73bd5abe');
 	var channel = pusher.subscribe('presence-test');
-	var streamer = new phonephonephone(channel);
+
+	channel.bind('pusher:subscription_succeeded', function() {
+		console.log('subscribed successfully');
+	});
+	
 	$(document).ready(function () {   
+		// need DOM in place for this to make sense
+		var streamer = new phonephonephone(channel);
 	});
 });
 </script>
