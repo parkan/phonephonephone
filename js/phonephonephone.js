@@ -80,9 +80,9 @@ function bootstrap(){
     }
   }
   // fire run script when everything is loaded
-  jQuery.when(promises){
+  jQuery.when(promises).then(function(){
     run();
-  }
+  });
 }
 
 if (window.jQuery === undefined) {
