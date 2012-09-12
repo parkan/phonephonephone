@@ -83,7 +83,7 @@ function bootstrap(){
   console.log(promises);
   */
   // fire run script when everything is loaded
-  jQuery.when(jQuery.getScript(libs['Pusher']).then(function(){
+  jQuery.when(jQuery.getScript(libs['Pusher'])).then(function(){
     run();
   });
 }
