@@ -36,7 +36,7 @@ phonephonephone.prototype.sendActivity = function(activityType, activityData) {
 
 // RUN
 
-function sync_viewport(){
+function sync_viewport(channel){
   var triggered = channel.trigger('sync_viewport', { w : $(window).width(), h : $(window).height() });
 }
 
@@ -65,7 +65,7 @@ function run(){
     $(document).ready(function () {   
     // need DOM in place for this to make sense
     var streamer = new phonephonephone(channel);
-    channel.bind('pusher:subscription_succeeded', sync_viewport);
+    channel.bind('pusher:subscription_succeeded', function(channel){sync_viewport(channel)});
 
     Pusher.log('here');
   });
