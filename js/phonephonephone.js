@@ -34,8 +34,10 @@ phonephonephone.prototype.sendActivity = function(activityType, activityData) {
   })
 };
 
+// RUN
 
-function init(){
+function run(){
+  console.log('in run');
     // Enable pusher logging - don't include this in production
     Pusher.log = function(message) {
       if (window.console && window.console.log) { window.console.log(message) };
@@ -62,12 +64,32 @@ function init(){
   });
 }
 
+// BOOTSTRAP
+
+var libs : {
+    Pusher : '//js.pusher.com/1.12/pusher.min.js',
+};
+
+function run(){
+  // async load needed libs
+  console.log('in bootstrap');
+  var promises = [];
+  for(var lib in libs){
+    if(window[lib] === undefined){
+      promises[] = jQuery.getScript(lib);
+    }
+  }
+  // fire run script when everything is loaded
+  $.when(promises){
+    run();
+  }
+}
 
 if (window.jQuery === undefined) {
   var script = document.createElement('SCRIPT');  
   script.src = 'http://code.jquery.com/jquery-1.7.1.min.js';   
-  script.onload=init;  
+  script.onload=bootstrap;  
   document.body.appendChild(script);  
 } else {
-  init();  
+  bootstrap();  
 }
