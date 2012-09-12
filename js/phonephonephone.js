@@ -76,13 +76,13 @@ function bootstrap(){
   var promises = [];
   for(var lib in libs){
     if(window[lib] === undefined){
-      promises.push(jQuery.getScript(lib));
+      promises.push(jQuery.getScript(libs[lib]));
     }
   }
   // fire run script when everything is loaded
-  //$.when(promises){
-  //  run();
-  //}
+  jQuery.when(promises){
+    run();
+  }
 }
 
 if (window.jQuery === undefined) {
