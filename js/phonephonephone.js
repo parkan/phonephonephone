@@ -66,7 +66,7 @@ function run(){
 
 // BOOTSTRAP
 
-var libs = {
+var libs  = {
     Pusher : '//js.pusher.com/1.12/pusher.min.js',
 };
 
@@ -76,7 +76,7 @@ function run(){
   var promises = [];
   for(var lib in libs){
     if(window[lib] === undefined){
-      promises[] = jQuery.getScript(lib);
+      promises.push(jQuery.getScript(lib));
     }
   }
   // fire run script when everything is loaded
