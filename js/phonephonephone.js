@@ -63,7 +63,7 @@ function run(){
 
 
     var sync_viewport = function(){
-      var triggered = channel.trigger('sync_viewport', { w : $(window).width(), h : $(window).height() });
+      var triggered = channel.trigger('sync_viewport', { x: window.pageXOffset, y: window.pageXOffset,  w: $(window).width(), h: $(window).height() });
     };
     channel.bind('pusher:subscription_succeeded', sync_viewport);
 
