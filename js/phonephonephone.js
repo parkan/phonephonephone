@@ -70,7 +70,7 @@ var libs  = {
     Pusher : '//js.pusher.com/1.12/pusher.min.js',
 };
 
-function run(){
+function bootstrap(){
   // async load needed libs
   console.log('in bootstrap');
   var promises = [];
