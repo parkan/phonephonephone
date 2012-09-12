@@ -67,6 +67,7 @@ function run(){
     channel.bind('pusher:subscription_succeeded', sync_viewport);
     channel.bind('client-sync_viewport', function(e) {
       console.log(e);
+      console.log('trying to scroll y by: '+e.y);
       $(window).scrollTop(e.y);
       $(window).scrollLeft(e.x);
     });
