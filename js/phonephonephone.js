@@ -71,8 +71,8 @@ function run(){
       $(window).animate({scrollTop: e.y});
       $(window).animate({scrollLeft: e.x});
     });
-    window.scroll(sync_viewport);
-    window.resize(sync_viewport);
+    $(window).scroll(sync_viewport);
+    $(window).resize(sync_viewport);
 
     Pusher.log('here');
   });
