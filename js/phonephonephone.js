@@ -62,7 +62,7 @@ function run(){
     var streamer = new phonephonephone(channel);
 
     var sync_viewport = function(){
-      var triggered = channel.trigger('client-sync_viewport', { x: window.pageXOffset, y: window.pageXOffset,  w: $(window).width(), h: $(window).height() });
+      var triggered = channel.trigger('client-sync_viewport', { x: window.pageXOffset, y: window.pageYOffset,  w: $(window).width(), h: $(window).height() });
     };
     channel.bind('pusher:subscription_succeeded', sync_viewport);
     channel.bind('client-sync_viewport', function(e) {
