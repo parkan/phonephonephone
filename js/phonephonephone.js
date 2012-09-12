@@ -36,7 +36,6 @@ phonephonephone.prototype.sendActivity = function(activityType, activityData) {
 
 // RUN
 function run(){
-  console.log('in run');
     // Enable pusher logging - don't include this in production
     Pusher.log = function(message) {
       if (window.console && window.console.log) { window.console.log(message) };
@@ -61,6 +60,73 @@ function run(){
     // need DOM in place for this to make sense
     var streamer = new phonephonephone(channel);
 
+    // create pseudo-event for scroll end (from http://james.padolsey.com/javascript/special-scroll-events-for-jquery/)
+    var special = jQuery.event.special,
+    uid1 = 'D' + (+new Date()),
+    uid2 = 'D' + (+new Date() + 1);
+
+    special.scrollstart = {
+      setup: function() {
+
+        var timer,
+        handler =  function(evt) {
+
+          var _self = this,
+          _args = arguments;
+
+          if (timer) {
+            clearTimeout(timer);
+          } else {
+            evt.type = 'scrollstart';
+            jQuery.event.handle.apply(_self, _args);
+          }
+
+          timer = setTimeout( function(){
+            timer = null;
+          }, special.scrollstop.latency);
+
+        };
+
+        jQuery(this).bind('scroll', handler).data(uid1, handler);
+
+      },
+      teardown: function(){
+        jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+      }
+    };
+
+    special.scrollstop = {
+      latency: 300,
+      setup: function() {
+
+        var timer,
+        handler = function(evt) {
+
+          var _self = this,
+          _args = arguments;
+
+          if (timer) {
+            clearTimeout(timer);
+          }
+
+          timer = setTimeout( function(){
+
+            timer = null;
+            evt.type = 'scrollstop';
+            jQuery.event.handle.apply(_self, _args);
+
+          }, special.scrollstop.latency);
+
+        };
+
+        jQuery(this).bind('scroll', handler).data(uid2, handler);
+
+      },
+      teardown: function() {
+        jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
+      }
+    };
+
     var sync_viewport = function(){
       var triggered = channel.trigger('client-sync_viewport', { x: window.pageXOffset, y: window.pageYOffset,  w: $(window).width(), h: $(window).height() });
     };
@@ -73,12 +139,10 @@ function run(){
       //$(window).animate({scrollTop: e.y});
       //$(window).animate({scrollLeft: e.x});
     });
-    $(window).scroll(sync_viewport);
-    $(window).resize(sync_viewport);
-
-    Pusher.log('here');
+    $(window).bind('scrollstop',sync_viewport);
+    //$(window).resize(sync_viewport);
   });
-}
+  }
 
 // BOOTSTRAP
 
