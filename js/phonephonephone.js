@@ -61,6 +61,9 @@ function run(){
     $(document).ready(function () {   
     // need DOM in place for this to make sense
     var streamer = new phonephonephone(channel);
+
+    // welcome dimensions
+    var triggered = channel.trigger('sync_viewport', { w : $(window).width(), h : $(window).height() });
     Pusher.log('here');
   });
 }
