@@ -79,6 +79,7 @@ function bootstrap(){
       promises.push(jQuery.getScript(libs[lib]));
     }
   }
+  console.log(promises);
   // fire run script when everything is loaded
   jQuery.when(promises).then(function(){
     run();
@@ -86,10 +87,12 @@ function bootstrap(){
 }
 
 if (window.jQuery === undefined) {
+  console.log('loading jQuery');
   var script = document.createElement('SCRIPT');  
   script.src = 'http://code.jquery.com/jquery-1.7.1.min.js';   
   script.onload=bootstrap;  
   document.body.appendChild(script);  
 } else {
+  console.log('jQuery already loaded');
   bootstrap();  
 }
