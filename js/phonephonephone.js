@@ -73,6 +73,7 @@ var libs  = {
 function bootstrap(){
   // async load needed libs
   console.log('in bootstrap');
+  /*
   var promises = [];
   for(var lib in libs){
     if(window[lib] === undefined){
@@ -80,8 +81,9 @@ function bootstrap(){
     }
   }
   console.log(promises);
+  */
   // fire run script when everything is loaded
-  jQuery.when(promises).then(function(){
+  jQuery.when(jQuery.getScript(libs['Pusher']).then(function(){
     run();
   });
 }
