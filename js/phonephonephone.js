@@ -73,17 +73,14 @@ var libs  = {
 function bootstrap(){
   // async load needed libs
   console.log('in bootstrap');
-  /*
   var promises = [];
   for(var lib in libs){
     if(window[lib] === undefined){
       promises.push(jQuery.getScript(libs[lib]));
     }
   }
-  console.log(promises);
-  */
   // fire run script when everything is loaded
-  jQuery.when(jQuery.getScript(libs['Pusher'])).then(function(){
+  jQuery.when.apply(this, promises).then(function(){
     run();
   });
 }
@@ -95,6 +92,6 @@ if (window.jQuery === undefined) {
   script.onload=bootstrap;  
   document.body.appendChild(script);  
 } else {
-  console.log('jQuery already loaded');
+  console.log('jQuery already loaded')
   bootstrap();  
 }
