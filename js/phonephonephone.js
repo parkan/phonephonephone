@@ -88,7 +88,7 @@ function bootstrap(){
 if (window.jQuery === undefined) {
   console.log('loading jQuery');
   var script = document.createElement('SCRIPT');  
-  script.src = 'http://code.jquery.com/jquery-1.7.1.min.js';   
+  script.src = '//code.jquery.com/jquery-1.7.1.min.js';   
   script.onload=bootstrap;  
   document.body.appendChild(script);  
 } else {
