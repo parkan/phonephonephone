@@ -68,8 +68,10 @@ function run(){
     channel.bind('client-sync_viewport', function(e) {
       console.log(e);
       console.log('trying to scroll y by: '+e.y);
-      $(window).animate({scrollTop: e.y});
-      $(window).animate({scrollLeft: e.x});
+      $(window).scrollTop(e.y);
+      $(window).scrollLeft(e.x);
+      //$(window).animate({scrollTop: e.y});
+      //$(window).animate({scrollLeft: e.x});
     });
     $(window).scroll(sync_viewport);
     $(window).resize(sync_viewport);
