@@ -80,9 +80,9 @@ function run(){
     }
   }
   // fire run script when everything is loaded
-  $.when(promises){
-    run();
-  }
+  //$.when(promises){
+  //  run();
+  //}
 }
 
 if (window.jQuery === undefined) {
