@@ -66,7 +66,7 @@ function run(){
 
 // BOOTSTRAP
 
-var libs : {
+var libs = {
     Pusher : '//js.pusher.com/1.12/pusher.min.js',
 };
 
