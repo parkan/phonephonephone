@@ -47,7 +47,7 @@ function run(){
     WEB_SOCKET_DEBUG = true;
 
     // set up auth
-    Pusher.channel_auth_endpoint = '/pusher_auth.php';
+    Pusher.channel_auth_endpoint = '//phonephonephone.herokuapp.com/pusher_auth.php';
 
     // init
     var pusher = new Pusher('a4e27d5e92ed73bd5abe');
