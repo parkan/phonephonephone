@@ -50,6 +50,7 @@ function run(){
     Pusher.channel_auth_endpoint = '//phonephonephone.herokuapp.com/pusher_auth.php';
 
     // init
+    var clientid = Math.random().toString(16);
     var pusher = new Pusher('a4e27d5e92ed73bd5abe');
     var channel = pusher.subscribe('presence-test');
 
