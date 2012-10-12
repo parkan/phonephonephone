@@ -1,3 +1,5 @@
+'use strict';
+
 function phonephonephone(activityChannel, options) {
   var self = this;
   
@@ -60,12 +62,15 @@ function run(){
     // need DOM in place for this to make sense
     var streamer = new phonephonephone(channel);
 
+    // detect iOS (which has desired onscroll behavior) vs others (which trigger onscroll at an unknown, high rate)
+    var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false );
+
     // create pseudo-event for scroll end (from http://james.padolsey.com/javascript/special-scroll-events-for-jquery/)
     var special = jQuery.event.special,
     uid1 = 'D' + (+new Date()),
     uid2 = 'D' + (+new Date() + 1);
 
-    special.scrollstart = {
+    special.pppscrollstart = {
       setup: function() {
 
         var timer,
@@ -77,13 +82,13 @@ function run(){
           if (timer) {
             clearTimeout(timer);
           } else {
-            evt.type = 'scrollstart';
+            evt.type = 'pppscrollstart';
             jQuery.event.handle.apply(_self, _args);
           }
 
           timer = setTimeout( function(){
             timer = null;
-          }, special.scrollstop.latency);
+          }, special.pppscrollstop.latency);
 
         };
 
@@ -95,7 +100,7 @@ function run(){
       }
     };
 
-    special.scrollstop = {
+    special.pppscrollstop = {
       latency: 300,
       setup: function() {
 
@@ -112,10 +117,10 @@ function run(){
           timer = setTimeout( function(){
 
             timer = null;
-            evt.type = 'scrollstop';
+            evt.type = 'pppscrollstop';
             jQuery.event.handle.apply(_self, _args);
 
-          }, special.scrollstop.latency);
+          }, special.pppscrollstop.latency);
 
         };
 
@@ -139,7 +144,12 @@ function run(){
       //$(window).animate({scrollTop: e.y});
       //$(window).animate({scrollLeft: e.x});
     });
-    $(window).bind('scrollstop',sync_viewport);
+
+    if(iOS){
+      $(window).bind('onscroll',sync_viewport);
+    } else {
+      $(window).bind('pppscrollstop',sync_viewport);
+    }
     //$(window).resize(sync_viewport);
   });
   }
