@@ -44,7 +44,7 @@ function run(){
     };
 
     // Flash fallback logging - don't include this in production
-    WEB_SOCKET_DEBUG = true;
+    var WEB_SOCKET_DEBUG = true;
 
     // set up auth
     Pusher.channel_auth_endpoint = '//phonephonephone.herokuapp.com/pusher_auth.php';
