@@ -1,7 +1,7 @@
 <?php
-define("APP_KEY", 'a4e27d5e92ed73bd5abe');
-define("APP_SECRET", '82afbc5625bd4770f584');
-define("APP_ID", '24922');
+define("APP_KEY", 'a4e27d5e92ed73bd5abe'); // DEACTIVATED: supply valid pusher api key here
+define("APP_SECRET", '82afbc5625bd4770f584'); // DEACTIVATED
+define("APP_ID", '24922'); // DEACTIVATED
 require_once 'lib/Pusher-PHP/lib/Pusher.php';
 
 $pusher = new Pusher(APP_KEY, APP_SECRET, APP_ID);
