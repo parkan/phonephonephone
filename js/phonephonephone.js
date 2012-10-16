@@ -50,12 +50,15 @@ function run(){
     Pusher.channel_auth_endpoint = '//phonephonephone.herokuapp.com/pusher_auth.php';
 
     // init
-    var clientid = Math.random().toString(16);
+    var clientid = Math.random().toString(16); // don't know real client seq id until connected
+    var seq_id; // real connection order id (determines place in meta-geometry) 
+
     var pusher = new Pusher('a4e27d5e92ed73bd5abe');
-    var channel = pusher.subscribe('presence-test');
+    var channel = pusher.subscribe('presence-test'); // TODO: channel should derive from url?
 
     channel.bind('pusher:subscription_succeeded', function() {
       console.log('subscribed successfully');
+      console.log('members: '+channel.members.count);
     });
 
     $(document).ready(function () {   
@@ -135,6 +138,10 @@ function run(){
     var sync_viewport = function(){
       var triggered = channel.trigger('client-sync_viewport', { x: window.pageXOffset, y: window.pageYOffset,  w: $(window).width(), h: $(window).height() });
     };
+
+    var sync_viewport_initial = function(){
+    };
+
     channel.bind('pusher:subscription_succeeded', sync_viewport);
     channel.bind('client-sync_viewport', function(e) {
       console.log(e);
@@ -158,6 +165,7 @@ function run(){
 
 var libs  = {
     Pusher : '//js.pusher.com/1.12/pusher.min.js',
+    // etc
 };
 
 function bootstrap(){
