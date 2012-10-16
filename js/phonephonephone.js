@@ -153,7 +153,7 @@ function run(){
 // BOOTSTRAP
 
 var libs  = {
-    Pusher : '//js.pusher.com/1.12/pusher.min.js',
+    Pusher : '//d3ds63zw57jt09.cloudfront.net/1.7/pusher.min.js',
     // etc
 };
 
