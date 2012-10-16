@@ -18,22 +18,12 @@ function phonephonephone(activityChannel, options) {
 
 phonephonephone.prototype._handleActivity = function(activity, eventType) {
   var self = this;
-  
   // TODO: move viewport around here
 };
 
 phonephonephone.prototype.sendActivity = function(activityType, activityData) {
-  var data = {
-    activity_type: activityType,
-    activity_data: activityData
-  };
-  if(this._email) {
-    data.email = this._email;
-  }
-  $.ajax({
-    url: 'php/trigger_activity.php',
-    data: data
-  })
+  var self = this;
+  // TODO: send viewport move here
 };
 
 // RUN
@@ -68,73 +58,6 @@ function run(){
     // detect iOS (which has desired onscroll behavior) vs others (which trigger onscroll at an unknown, high rate)
     var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false );
 
-    // create pseudo-event for scroll end (from http://james.padolsey.com/javascript/special-scroll-events-for-jquery/)
-    var special = jQuery.event.special,
-    uid1 = 'D' + (+new Date()),
-    uid2 = 'D' + (+new Date() + 1);
-
-    special.pppscrollstart = {
-      setup: function() {
-
-        var timer,
-        handler =  function(evt) {
-
-          var _self = this,
-          _args = arguments;
-
-          if (timer) {
-            clearTimeout(timer);
-          } else {
-            evt.type = 'pppscrollstart';
-            jQuery.event.handle.apply(_self, _args);
-          }
-
-          timer = setTimeout( function(){
-            timer = null;
-          }, special.pppscrollstop.latency);
-
-        };
-
-        jQuery(this).bind('scroll', handler).data(uid1, handler);
-
-      },
-      teardown: function(){
-        jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
-      }
-    };
-
-    special.pppscrollstop = {
-      latency: 300,
-      setup: function() {
-
-        var timer,
-        handler = function(evt) {
-
-          var _self = this,
-          _args = arguments;
-
-          if (timer) {
-            clearTimeout(timer);
-          }
-
-          timer = setTimeout( function(){
-
-            timer = null;
-            evt.type = 'pppscrollstop';
-            jQuery.event.handle.apply(_self, _args);
-
-          }, special.pppscrollstop.latency);
-
-        };
-
-        jQuery(this).bind('scroll', handler).data(uid2, handler);
-
-      },
-      teardown: function() {
-        jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
-      }
-    };
-
     var sync_viewport = function(){
       var triggered = channel.trigger('client-sync_viewport', { x: window.pageXOffset, y: window.pageYOffset,  w: $(window).width(), h: $(window).height() });
     };
@@ -155,6 +78,72 @@ function run(){
     if(iOS){
       $(window).bind('onscroll',sync_viewport);
     } else {
+      // create pseudo-event for scroll end (from http://james.padolsey.com/javascript/special-scroll-events-for-jquery/)
+      var special = jQuery.event.special,
+      uid1 = 'D' + (+new Date()),
+      uid2 = 'D' + (+new Date() + 1);
+
+      special.pppscrollstart = {
+        setup: function() {
+
+          var timer,
+          handler =  function(evt) {
+
+            var _self = this,
+            _args = arguments;
+
+            if (timer) {
+              clearTimeout(timer);
+            } else {
+              evt.type = 'pppscrollstart';
+              jQuery.event.handle.apply(_self, _args);
+            }
+
+            timer = setTimeout( function(){
+              timer = null;
+            }, special.pppscrollstop.latency);
+
+          };
+
+          jQuery(this).bind('scroll', handler).data(uid1, handler);
+
+        },
+        teardown: function(){
+          jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
+        }
+      };
+
+      special.pppscrollstop = {
+        latency: 300,
+        setup: function() {
+
+          var timer,
+          handler = function(evt) {
+
+            var _self = this,
+            _args = arguments;
+
+            if (timer) {
+              clearTimeout(timer);
+            }
+
+            timer = setTimeout( function(){
+
+              timer = null;
+              evt.type = 'pppscrollstop';
+              jQuery.event.handle.apply(_self, _args);
+
+            }, special.pppscrollstop.latency);
+
+          };
+
+          jQuery(this).bind('scroll', handler).data(uid2, handler);
+
+        },
+        teardown: function() {
+          jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
+        }
+      };
       $(window).bind('pppscrollstop',sync_viewport);
     }
     //$(window).resize(sync_viewport);
