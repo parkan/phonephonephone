@@ -58,7 +58,7 @@ function run(){
 
     channel.bind('pusher:subscription_succeeded', function() {
       console.log('subscribed successfully');
-      console.log('members: '+channel.members.count);
+      seq_id = channel.members.count - 1; // 0 based
     });
 
     $(document).ready(function () {   
